@@ -16,6 +16,8 @@ class Items extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->bigInteger('branch_id');
+            $table->bigInteger('menu_id');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->decimal('amount', 10, 2);

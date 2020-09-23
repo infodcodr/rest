@@ -18,8 +18,8 @@ class CreateOrderTable extends Migration
             $table->bigInteger('restaurant_id')->default(0);
             $table->bigInteger('branch_id')->default(0);
             $table->bigInteger('table_id')->default(0);
-            $table->dateTime('order_time')->default(new DateTime());
-            $table->boolean('is_completed')->nullable()->default(false);
+            $table->timestamp('order_time');
+            $table->boolean('is_completed')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
