@@ -57,4 +57,4 @@ Route::group([ 'prefix' => 'admin'], function (){
 
 });
 
-Route::get('table/{id}', 'TableController@show');
+Route::get('table/{id}', 'Api\TableController@show');
