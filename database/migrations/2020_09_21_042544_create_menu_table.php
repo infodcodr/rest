@@ -19,6 +19,7 @@ class CreateMenuTable extends Migration
             $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->bigInteger('parent_id');
             $table->boolean('is_active')->nullable()->default(false);
             $table->timestamps();
         });

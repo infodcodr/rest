@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Items;
+use App\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ItemsController extends Controller
+class RestaurantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +20,8 @@ class ItemsController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $items = Items::paginate($per_page);
-            $data['data'] = $items;
+            $Restaurant = Restaurant::paginate($per_page);
+            $data['data'] = $Restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -49,8 +49,8 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         try{
-            $items = Items::create($request->except('_token'));
-            $data['data'] = $items;
+            $Restaurant = Restaurant::create($request->except('_token'));
+            $data['data'] = $Restaurant;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -62,10 +62,10 @@ class ItemsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Items  $items
+     * @param  \App\Restaurant  $Restaurant
      * @return \Illuminate\Http\Response
      */
-    public function show(Items $items)
+    public function show(Restaurant $Restaurant)
     {
         //
     }
@@ -73,10 +73,10 @@ class ItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Items  $items
+     * @param  \App\Restaurant  $Restaurant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Items $items)
+    public function edit(Restaurant $Restaurant)
     {
         //
     }
@@ -85,15 +85,15 @@ class ItemsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Items  $items
+     * @param  \App\Restaurant  $Restaurant
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
         try{
-            $items = Items::find($id);
-            $items->update($request->except(['_token','id','created_at','updated_at']));
-            $data['data'] = $items;
+            $Restaurant = Restaurant::find($id);
+            $Restaurant->update($request->except(['_token','id','created_at','updated_at']));
+            $data['data'] = $Restaurant;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -105,10 +105,10 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Items  $items
+     * @param  \App\Restaurant  $Restaurant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Items $items)
+    public function destroy(Restaurant $Restaurant)
     {
         //
     }
@@ -117,12 +117,12 @@ class ItemsController extends Controller
     {
         try{
             $all = $request->all();
-            $items = new Items();
+            $Restaurant = new Restaurant();
             foreach($all as $k=>$a){
-                $items = $items->where($k,'like','%'.$a. '%');
+                $Restaurant = $Restaurant->where($k,'like','%'.$a. '%');
             }
-            $items =$items->paginate(8);
-            $data['data'] =  $items;
+            $Restaurant =$Restaurant->paginate(8);
+            $data['data'] =  $Restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){

@@ -13,10 +13,14 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try{
-            $menu = Menu::all();
+            $per_page = 8;
+            if($request->per_page){
+                $per_page=$request->per_page;
+            }
+            $menu = Menu::paginate($per_page);
             $data['data'] = $menu;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
@@ -88,7 +92,7 @@ class MenuController extends Controller
     {
         try{
             $menu = Menu::find($id);
-            $menu->update($request->except('_token'));
+            $menu->update($request->except(['_token','id','created_at','updated_at']));
             $data['data'] = $menu;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);
@@ -107,5 +111,23 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        try{
+            $all = $request->all();
+            $menu = new Menu();
+            foreach($all as $k=>$a){
+                $menu = $menu->where($k,'like','%'.$a. '%');
+            }
+            $menu =$menu->paginate(8);
+            $data['data'] =  $menu;
+            $data['message'] = 'block';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
     }
 }

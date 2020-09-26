@@ -39,7 +39,7 @@ class TableController extends Controller
     {
         try{
             $table = Table::find($id);
-            $items =  $table->branch->menu()->with('items');
+            $items =  $table->branch->menu;
             $data['data'] = $items;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);

@@ -17,6 +17,6 @@ class Branch extends Model
     }
     public function menu()
     {
-        return $this->hasMany(Menu::class);
+        return $this->hasMany(Menu::class)->with('items');
     }
 }
