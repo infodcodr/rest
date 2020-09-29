@@ -50,6 +50,7 @@ class ItemsController extends Controller
     {
         try{
             $items = Items::create($request->except('_token'));
+            $this->images($request,$items);
             $data['data'] = $items;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);

@@ -50,6 +50,7 @@ class MenuController extends Controller
     {
         try{
             $menu = Menu::create($request->except('_token'));
+            $this->images($request,$menu);
             $data['data'] = $menu;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);

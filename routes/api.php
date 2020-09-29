@@ -52,6 +52,13 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('restaurants/{id}/update', 'Api\Admin\RestaurantController@update');
     Route::post('restaurants/{id}/remove', 'Api\Admin\RestaurantController@destroy');
 
+    Route::get('branch', 'Api\Admin\BranchController@index');
+    Route::post('branch', 'Api\Admin\BranchController@store');
+    Route::post('branch/search', 'Api\Admin\BranchController@search');
+    Route::post('branch/{id}', 'Api\Admin\BranchController@show');
+    Route::post('branch/{id}/update', 'Api\Admin\BranchController@update');
+    Route::post('branch/{id}/remove', 'Api\Admin\BranchController@destroy');
+
     Route::get('order', 'Api\Admin\OrderController@index');
     Route::post('order', 'Api\Admin\OrderController@store');
     Route::post('order/search', 'Api\Admin\OrderController@search');

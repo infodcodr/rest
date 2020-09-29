@@ -16,6 +16,10 @@ class Menu extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function images()
+    {
+        return $this->hasMany(Images::class);
+    }
 
     public function items()
     {

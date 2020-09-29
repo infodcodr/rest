@@ -10,4 +10,8 @@ class Items extends Model
     {
         return $this->belongsTo(SubMenu::class);
     }
+    public function images()
+    {
+        return $this->hasMany(Images::class);
+    }
 }

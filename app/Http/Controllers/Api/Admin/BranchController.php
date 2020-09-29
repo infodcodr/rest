@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Restaurant;
+use App\Branch;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RestaurantController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,8 @@ class RestaurantController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $Restaurant = Restaurant::paginate($per_page);
-            $this->images($request,$Restaurant);
-            $data['data'] = $Restaurant;
+            $branch = Branch::paginate($per_page);
+            $data['data'] = $branch;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -50,8 +49,9 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         try{
-            $Restaurant = Restaurant::create($request->except('_token'));
-            $data['data'] = $Restaurant;
+            $branch = Branch::create($request->except('_token'));
+            $this->images($request,$branch);
+            $data['data'] = $branch;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -63,10 +63,10 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Restaurant  $Restaurant
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function show(Restaurant $Restaurant)
+    public function show(Branch $branch)
     {
         //
     }
@@ -74,10 +74,10 @@ class RestaurantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Restaurant  $Restaurant
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function edit(Restaurant $Restaurant)
+    public function edit(Branch $branch)
     {
         //
     }
@@ -86,15 +86,15 @@ class RestaurantController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Restaurant  $Restaurant
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
         try{
-            $Restaurant = Restaurant::find($id);
-            $Restaurant->update($request->except(['_token','id','created_at','updated_at']));
-            $data['data'] = $Restaurant;
+            $branch = Branch::find($id);
+            $branch->update($request->except(['_token','id','created_at','updated_at']));
+            $data['data'] = $branch;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -106,10 +106,10 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Restaurant  $Restaurant
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Restaurant $Restaurant)
+    public function destroy(Branch $branch)
     {
         //
     }
@@ -118,12 +118,12 @@ class RestaurantController extends Controller
     {
         try{
             $all = $request->all();
-            $Restaurant = new Restaurant();
+            $branch = new Branch();
             foreach($all as $k=>$a){
-                $Restaurant = $Restaurant->where($k,'like','%'.$a. '%');
+                $branch = $branch->where($k,'like','%'.$a. '%');
             }
-            $Restaurant =$Restaurant->paginate(8);
-            $data['data'] =  $Restaurant;
+            $branch =$branch->paginate(8);
+            $data['data'] =  $branch;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){

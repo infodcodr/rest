@@ -12,4 +12,8 @@ class Restaurant extends Model
     {
         return $this->hasMany(Branch::class);
     }
+    public function images()
+    {
+        return $this->hasMany(Images::class);
+    }
 }
