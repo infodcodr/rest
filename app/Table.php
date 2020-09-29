@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\UuidTraits;
 use Illuminate\Database\Eloquent\Model;
 
 class Table extends Model
 {
+    use UuidTraits;
     protected $table = 'table';
 
     public function branch()
