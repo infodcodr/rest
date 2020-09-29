@@ -15,6 +15,7 @@ class CreateBranchTable extends Migration
     {
         Schema::create('branch', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->bigInteger('restaurant_id')->nullable()->default(12);
             $table->string('branch_name')->nullable();
             $table->string('contact_name')->nullable();

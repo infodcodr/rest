@@ -21,4 +21,14 @@ class Menu extends Model
     {
         return $this->hasMany(Items::class);
     }
+
+    public function childMenu()
+    {
+        return Menu::where('parent_id',$this->id)->get();
+    }
+
+    public function parentMenu()
+    {
+        return Menu::where('id',$this->parent_id)->first();
+    }
 }

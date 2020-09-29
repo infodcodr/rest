@@ -15,9 +15,10 @@ class Items extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->string('name')->nullable();
-            $table->bigInteger('branch_id');
-            $table->bigInteger('menu_id');
+            $table->bigInteger('branch_id')->default(0);
+            $table->bigInteger('menu_id')->default(0);
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->decimal('amount', 10, 2);

@@ -15,6 +15,7 @@ class CreateSubMenuTable extends Migration
     {
         Schema::create('sub_menu', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
