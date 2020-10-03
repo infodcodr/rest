@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use UuidTraits;
+    protected $fillable = ['table_id','branch_id','item_id','qty','amount'];
+
     public function table()
     {
         return $this->hasMany(Table::class);
