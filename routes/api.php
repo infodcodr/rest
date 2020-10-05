@@ -74,10 +74,12 @@ Route::group([ 'prefix' => 'admin'], function (){
 
 });
 
-Route::get('cart', 'Api\CartController@index');
+Route::get('cart/{table_id}', 'Api\CartController@index');
 Route::post('cart', 'Api\CartController@store');
 Route::post('cart/{id}', 'Api\CartController@show');
 Route::post('cart/{id}/update', 'Api\CartController@update');
 Route::post('cart/{id}/remove', 'Api\CartController@destroy');
 
 Route::get('table/{id}', 'Api\TableController@show');
+Route::post('table/{id}/update', 'Api\TableController@update');
+Route::get('branch/{id}', 'Api\BranchController@show');

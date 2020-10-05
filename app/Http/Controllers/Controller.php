@@ -18,6 +18,9 @@ class Controller extends BaseController
     }
 
     public function images($request,$model){
+        if ($request->has('rmvimg')) {
+            $images = Images::whereIn('id',$request->get('rmvimg'))->delete();
+        }
         if ($request->has('files')) {
             foreach($request->file('files') as $file){
                 $filenameWithExt = $file->getClientOriginalName();

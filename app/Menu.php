@@ -20,7 +20,7 @@ class Menu extends Model
     }
     public function images()
     {
-        return $this->hasMany(Images::class);
+        return $this->hasMany(Images::class,'image_id','id');
     }
 
     public function items()

@@ -9,6 +9,7 @@ class Restaurant extends Model
 {
     use UuidTraits;
     protected $table = 'restaurant';
+    protected $fillable = ['uuid', 'name', 'contact_name', 'contact_email', 'contact_no', 'phone', 'email', 'address', 'city', 'state', 'pincode', 'is_active', 'is_suspended'];
 
     public function branch()
     {

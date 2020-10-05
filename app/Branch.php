@@ -9,6 +9,8 @@ class Branch extends Model
 {
     use UuidTraits;
     protected $table = 'branch';
+      protected $fillable = ['uuid', 'restaurant_id', 'branch_name', 'contact_name', 'contact_email', 'contact_no', 'phone', 'email', 'address', 'city', 'state', 'is_active', 'is_suspended'];
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);

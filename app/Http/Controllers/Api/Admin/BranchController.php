@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Branch;
+use App\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +22,10 @@ class BranchController extends Controller
                 $per_page=$request->per_page;
             }
             $branch = Branch::paginate($per_page);
+            $restaurant = Restaurant::select('name','id')->get();
+
             $data['data'] = $branch;
+             $data['xdata']['restaurant'] = $restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -94,6 +98,7 @@ class BranchController extends Controller
         try{
             $branch = Branch::find($id);
             $branch->update($request->except(['_token','id','created_at','updated_at']));
+            $this->images($request,$branch);
             $data['data'] = $branch;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);

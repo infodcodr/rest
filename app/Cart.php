@@ -20,6 +20,6 @@ class Cart extends Model
     }
     public function items()
     {
-        return $this->hasMany(items::class);
+        return $this->hasOne(Items::class,'id','item_id');
     }
 }

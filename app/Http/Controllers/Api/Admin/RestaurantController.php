@@ -21,7 +21,7 @@ class RestaurantController extends Controller
                 $per_page=$request->per_page;
             }
             $Restaurant = Restaurant::paginate($per_page);
-            $this->images($request,$Restaurant);
+
             $data['data'] = $Restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
@@ -51,6 +51,7 @@ class RestaurantController extends Controller
     {
         try{
             $Restaurant = Restaurant::create($request->except('_token'));
+            $this->images($request,$Restaurant);
             $data['data'] = $Restaurant;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
@@ -94,6 +95,7 @@ class RestaurantController extends Controller
         try{
             $Restaurant = Restaurant::find($id);
             $Restaurant->update($request->except(['_token','id','created_at','updated_at']));
+            $this->images($request,$Restaurant);
             $data['data'] = $Restaurant;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);

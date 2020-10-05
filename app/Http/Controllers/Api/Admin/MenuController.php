@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Menu;
+use DB;
+use App\Branch;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,8 +23,10 @@ class MenuController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $menu = Menu::paginate($per_page);
+            $menu = Menu::with('images')->paginate($per_page);
+            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
             $data['data'] = $menu;
+            $data['xdata']['branch'] = $branch;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -94,6 +99,7 @@ class MenuController extends Controller
         try{
             $menu = Menu::find($id);
             $menu->update($request->except(['_token','id','created_at','updated_at']));
+            $this->images($request,$menu);
             $data['data'] = $menu;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);

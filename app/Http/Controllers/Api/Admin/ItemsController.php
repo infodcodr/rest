@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Items;
+use DB;
+use App\Branch;
+use App\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +24,11 @@ class ItemsController extends Controller
                 $per_page=$request->per_page;
             }
             $items = Items::paginate($per_page);
+            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+            $menu = Menu::select(DB::raw('name as name'),'id')->get();
             $data['data'] = $items;
+             $data['xdata']['branch'] = $branch;
+             $data['xdata']['menu'] = $menu;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -94,6 +101,7 @@ class ItemsController extends Controller
         try{
             $items = Items::find($id);
             $items->update($request->except(['_token','id','created_at','updated_at']));
+            $this->images($request,$items);
             $data['data'] = $items;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);

@@ -14,11 +14,11 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($table_id)
     {
         try{
 
-            $cart = Cart::where('table_id',$request->table_id)->where('created_at','>',Carbon::now()->subMinutes(30));
+            $cart = Cart::with('items')->where('table_id',$table_id)->get();
             $data['data'] = $cart;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
@@ -47,7 +47,13 @@ class CartController extends Controller
     public function store(Request $request)
     {
         try{
+            $cart = Cart::where('table_id',$request->table_id)->where('item_id',$request->item_id)->first();
+            if($cart){
+                $cart->qty = $request->qty;
+                $cart->save();
+            }else{
             $cart = Cart::create($request->except('_token'));
+            }
             $data['data'] = $cart;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);

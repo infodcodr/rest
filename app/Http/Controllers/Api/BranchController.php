@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Table;
+use App\Branch;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TableController extends Controller
+class BranchController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,14 +32,14 @@ class TableController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Table  $table
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         try{
-            $table = Table::find($id);
-            $items =  $table->branch->menu;
+            $branch = Branch::find($id);
+            $items =  $branch->table;
             $data['data'] = $items;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
@@ -53,34 +53,21 @@ class TableController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Table  $table
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Branch $branch)
     {
-        try{
-            $table = Table::find($id);
-            $table->width =$request->width;
-            $table->height =$request->height;
-            $table->x =$request->x;
-            $table->y =$request->y;
-            $items =  $table->save();
-            $data['data'] = $items;
-            $data['message'] = 'block';
-            return  $this->apiResponse($data,200);
-        }catch(\Exception $e){
-            $data['message'] = $e->getMessage();
-            return  $this->apiResponse($data,404);
-        }
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Table  $table
+     * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Table $table)
+    public function destroy(Branch $branch)
     {
         //
     }
