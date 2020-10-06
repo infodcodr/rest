@@ -40,7 +40,7 @@ class Controller extends BaseController
                 $image->image_type = get_class($model);
                 $image->image_id = $model->id;
                 $image->save();
-                $model->images()->save($image);
+                //$model->images()->save($image);
             }
         }
     }

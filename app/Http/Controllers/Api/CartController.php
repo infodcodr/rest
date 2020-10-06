@@ -18,7 +18,7 @@ class CartController extends Controller
     {
         try{
 
-            $cart = Cart::with('items')->where('table_id',$table_id)->get();
+            $cart = Cart::with('items')->where('table_id',$table_id)->where('qty','>','0')->get();
             $data['data'] = $cart;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
@@ -51,6 +51,9 @@ class CartController extends Controller
             if($cart){
                 $cart->qty = $request->qty;
                 $cart->save();
+                if($cart->qty == 0){
+                    $cart->delete();
+                }
             }else{
             $cart = Cart::create($request->except('_token'));
             }
