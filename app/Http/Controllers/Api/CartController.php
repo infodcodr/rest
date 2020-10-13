@@ -51,13 +51,13 @@ class CartController extends Controller
             if($cart){
                 $cart->qty = $request->qty;
                 $cart->save();
-                if($cart->qty == 0){
+                if($request->qty == '0'){
                     $cart->delete();
                 }
             }else{
             $cart = Cart::create($request->except('_token'));
             }
-            $data['data'] = $cart;
+            $data['data'] = $request->qty ;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){

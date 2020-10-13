@@ -30,6 +30,8 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('table/{id}', 'Api\Admin\TableController@show');
     Route::post('table/{id}/update', 'Api\Admin\TableController@update');
     Route::post('table/{id}/remove', 'Api\Admin\TableController@destroy');
+    Route::post('table/{id}/setposition', 'Api\Admin\TableController@setposition');
+    Route::get('table/{id}/get', 'Api\Admin\TableController@getTables');
 
     Route::get('menu', 'Api\Admin\MenuController@index');
     Route::post('menu', 'Api\Admin\MenuController@store');
@@ -51,6 +53,13 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('restaurants/{id}', 'Api\Admin\RestaurantController@show');
     Route::post('restaurants/{id}/update', 'Api\Admin\RestaurantController@update');
     Route::post('restaurants/{id}/remove', 'Api\Admin\RestaurantController@destroy');
+
+    Route::get('user', 'Api\Admin\UserController@index');
+    Route::post('user', 'Api\Admin\UserController@store');
+    Route::post('user/search', 'Api\Admin\UserController@search');
+    Route::post('user/{id}', 'Api\Admin\UserController@show');
+    Route::post('user/{id}/update', 'Api\Admin\UserController@update');
+    Route::post('user/{id}/remove', 'Api\Admin\UserController@destroy');
 
     Route::get('branch', 'Api\Admin\BranchController@index');
     Route::post('branch', 'Api\Admin\BranchController@store');
