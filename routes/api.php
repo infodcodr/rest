@@ -92,6 +92,8 @@ Route::post('cart/{id}/remove', 'Api\CartController@destroy');
 
 Route::post('order', 'Api\OrderController@store');
 
+Route::get('order/{id}', 'Api\OrderController@index');
+Route::get('order/detail/{id}', 'Api\OrderController@show');
 Route::get('table/{id}', 'Api\TableController@show');
 Route::post('table/{id}/update', 'Api\TableController@update');
 Route::get('branch/{id}', 'Api\BranchController@show');

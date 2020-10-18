@@ -16,9 +16,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($table_id)
     {
-        //
+        try{
+
+            $order = Order::with('orderItem')->where('table_id',$table_id)->where('qty','>','0')->get();
+            $data['data'] = $order;
+            $data['message'] = 'order';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
     }
 
     /**
@@ -63,9 +72,18 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        try{
+
+            $order = Order::with('orderItem')->where('id',$id)->first();
+            $data['data'] = $order;
+            $data['message'] = 'order';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
     }
 
     /**
