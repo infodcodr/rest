@@ -46,6 +46,7 @@ class OrderController extends Controller
                 $orderItem->amount = $c->amount;
                 $orderItem->save();
             }
+            Cart::with('items')->where('table_id',$request->table_id)->where('qty','>','0')->delete();
 
             $data['data'] = $order;
             $data['message'] = 'update';
