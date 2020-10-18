@@ -20,7 +20,7 @@ class OrderController extends Controller
     {
         try{
 
-            $order = Order::with('orderItem')->where('table_id',$table_id)->where('qty','>','0')->get();
+            $order = Order::with('orderItem')->where('table_id',$table_id)->get();
             $data['data'] = $order;
             $data['message'] = 'order';
             return  $this->apiResponse($data,200);
