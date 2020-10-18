@@ -32,6 +32,7 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('table/{id}/remove', 'Api\Admin\TableController@destroy');
     Route::post('table/{id}/setposition', 'Api\Admin\TableController@setposition');
     Route::get('table/{id}/get', 'Api\Admin\TableController@getTables');
+    Route::get('table/{id}/generate', 'Api\Admin\TableController@generate');
 
     Route::get('menu', 'Api\Admin\MenuController@index');
     Route::post('menu', 'Api\Admin\MenuController@store');
@@ -88,6 +89,8 @@ Route::post('cart', 'Api\CartController@store');
 Route::post('cart/{id}', 'Api\CartController@show');
 Route::post('cart/{id}/update', 'Api\CartController@update');
 Route::post('cart/{id}/remove', 'Api\CartController@destroy');
+
+Route::post('order', 'Api\OrderController@store');
 
 Route::get('table/{id}', 'Api\TableController@show');
 Route::post('table/{id}/update', 'Api\TableController@update');

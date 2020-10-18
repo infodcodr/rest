@@ -6,6 +6,7 @@ use App\Branch;
 use App\Table;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use LaravelQRCode\Facades\QRCode;
 
 class TableController extends Controller
 {
@@ -132,6 +133,19 @@ class TableController extends Controller
         try{
             $branch = Branch::find($id);
             $data['data'] = $branch->table;
+            $data['message'] = 'table List';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
+    }
+
+    public function generate(Request $request,$id)
+    {
+        try{
+            $qrCOde = QRCode::text('QR Code Generator for Laravel!')->png();
+            $data['data'] = $qrCOde;
             $data['message'] = 'table List';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
