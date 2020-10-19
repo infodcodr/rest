@@ -69,6 +69,20 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('branch/{id}/update', 'Api\Admin\BranchController@update');
     Route::post('branch/{id}/remove', 'Api\Admin\BranchController@destroy');
 
+    Route::get('role', 'Api\Admin\RoleController@index');
+    Route::post('role', 'Api\Admin\RoleController@store');
+    Route::post('role/search', 'Api\Admin\RoleController@search');
+    Route::post('role/{id}', 'Api\Admin\RoleController@show');
+    Route::post('role/{id}/update', 'Api\Admin\RoleController@update');
+    Route::post('role/{id}/remove', 'Api\Admin\RoleController@destroy');
+
+    Route::get('permission', 'Api\Admin\PermissionController@index');
+    Route::post('permission', 'Api\Admin\PermissionController@store');
+    Route::post('permission/search', 'Api\Admin\PermissionController@search');
+    Route::post('permission/{id}', 'Api\Admin\PermissionController@show');
+    Route::post('permission/{id}/update', 'Api\Admin\PermissionController@update');
+    Route::post('permission/{id}/remove', 'Api\Admin\PermissionController@destroy');
+
     Route::get('order', 'Api\Admin\OrderController@index');
     Route::post('order', 'Api\Admin\OrderController@store');
     Route::post('order/search', 'Api\Admin\OrderController@search');

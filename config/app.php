@@ -174,7 +174,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Berkayk\OneSignal\OneSignalServiceProvider::class
+        Berkayk\OneSignal\OneSignalServiceProvider::class,
+        LaravelQRCode\Providers\QRCodeServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class
 
     ],
 
@@ -226,6 +228,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'QRCode' => LaravelQRCode\Facades\QRCode::class,
         'OneSignal' => Berkayk\OneSignal\OneSignalFacade::class
 
 
