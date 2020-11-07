@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Items;
 
 class OrderController extends Controller
 {
@@ -107,5 +108,17 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+    public function generate(Request $request,$id)
+    {
+        try{
+            $Item = Items::all();
+            $data['data'] = $Item;
+            $data['message'] = 'Item';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
     }
 }

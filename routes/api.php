@@ -89,6 +89,7 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('order/{id}', 'Api\Admin\OrderController@show');
     Route::post('order/{id}/update', 'Api\Admin\OrderController@update');
     Route::post('order/{id}/remove', 'Api\Admin\OrderController@destroy');
+    Route::post('order/{id}/generate', 'Api\Admin\OrderController@generate');
 
     Route::get('cart', 'Api\Admin\CartController@index');
     Route::post('cart', 'Api\Admin\CartController@store');

@@ -129,7 +129,9 @@ class MenuController extends Controller
                 $menu = $menu->where($k,'like','%'.$a. '%');
             }
             $menu =$menu->paginate(8);
-            $data['data'] =  $menu;
+             $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+            $data['data'] = $menu;
+            $data['xdata']['branch'] = $branch;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
