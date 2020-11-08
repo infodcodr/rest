@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Menu;
 use DB;
 use App\Branch;
-
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,8 +25,10 @@ class MenuController extends Controller
             }
             $menu = Menu::with('images')->paginate($per_page);
             $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+            $category = Category::select('name','id')->get();
             $data['data'] = $menu;
             $data['xdata']['branch'] = $branch;
+            $data['xdata']['category'] = $category;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
