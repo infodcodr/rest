@@ -6,6 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
+use App\Branch;
+use App\Restaurant;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -23,8 +26,13 @@ class UserController extends Controller
             }
             $role = Role::get();
             $User = User::with('roles')->paginate($per_page);
+            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+            $restaurant = Restaurant::select('name','id')->get();
             $data['data'] = $User;
+            $data['dataex'] = auth()->user()->hasRole('Super Admin');
             $data['xdata']['role'] = $role;
+            $data['xdata']['branch'] = $branch;
+            $data['xdata']['restaurant'] = $restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
