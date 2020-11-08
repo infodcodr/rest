@@ -24,7 +24,7 @@ Route::group([ 'prefix' => 'auth'], function (){
     });
 });
 
-Route::group([ 'prefix' => 'admin','middleware' => 'auth:api'], function (){
+Route::group([ 'prefix' => 'admin','middleware' => ['auth:api','check-permission']], function (){
     Route::get('table', 'Api\Admin\TableController@index');
     Route::post('table', 'Api\Admin\TableController@store');
     Route::post('table/{id}', 'Api\Admin\TableController@show');
@@ -75,6 +75,13 @@ Route::group([ 'prefix' => 'admin','middleware' => 'auth:api'], function (){
     Route::post('role/{id}', 'Api\Admin\RoleController@show');
     Route::post('role/{id}/update', 'Api\Admin\RoleController@update');
     Route::post('role/{id}/remove', 'Api\Admin\RoleController@destroy');
+
+    Route::get('category', 'Api\Admin\CategoryController@index');
+    Route::post('category', 'Api\Admin\CategoryController@store');
+    Route::post('category/search', 'Api\Admin\CategoryController@search');
+    Route::post('category/{id}', 'Api\Admin\CategoryController@show');
+    Route::post('category/{id}/update', 'Api\Admin\CategoryController@update');
+    Route::post('category/{id}/remove', 'Api\Admin\CategoryController@destroy');
 
     Route::get('permission', 'Api\Admin\PermissionController@index');
     Route::post('permission', 'Api\Admin\PermissionController@store');

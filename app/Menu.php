@@ -37,4 +37,8 @@ class Menu extends Model
     {
         return Menu::where('id',$this->parent_id)->first();
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

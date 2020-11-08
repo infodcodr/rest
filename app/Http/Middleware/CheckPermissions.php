@@ -15,7 +15,7 @@ class CheckPermissions
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->user()->hasRole('Super Admin') || !auth()->user()->hasRole('Admin'))
+        if(!auth()->user()->hasRole('Super Admin') && !auth()->user()->hasRole('Admin'))
         {
             return response()->json('No Permission','505');
         }
