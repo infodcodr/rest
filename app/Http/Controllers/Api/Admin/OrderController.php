@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Items;
+use App\Items;
+use Carbon\Carbon;
+use App\OrderItem;
+use App\Table;
 
 class OrderController extends Controller
 {
@@ -112,9 +115,45 @@ class OrderController extends Controller
     public function generate(Request $request,$id)
     {
         try{
+            $tables=Table::where('branch_id',$id)->get();
             $Item = Items::all();
             $data['data'] = $Item;
+            $data['tables'] = $tables;
             $data['message'] = 'Item';
+            return  $this->apiResponse($data,200);
+        }catch(\Exception $e){
+            $data['message'] = $e->getMessage();
+            return  $this->apiResponse($data,404);
+        }
+    }
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function order(Request $request)
+    {
+        try{
+            $order = New Order();
+            $order->restaurant_id = $request->restaurant_id;
+            $order->branch_id = $request->branch_id;
+            $order->table_id = $request->table_id;
+            $order->order_time = Carbon::now();
+            $order->is_completed = '1';
+            $order->save();
+            $cart = $request->selected;
+            foreach($cart as $c){
+                $orderItem = New OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->item_id = $c['item'];
+                $orderItem->qty = $c['qty'];
+                $orderItem->amount = $c['amount'];
+                $orderItem->save();
+            }
+
+            $data['data'] = $order;
+            $data['message'] = 'update';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
             $data['message'] = $e->getMessage();

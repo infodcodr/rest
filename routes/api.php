@@ -24,7 +24,7 @@ Route::group([ 'prefix' => 'auth'], function (){
     });
 });
 
-Route::group([ 'prefix' => 'admin'], function (){
+Route::group([ 'prefix' => 'admin','middleware' => 'auth:api'], function (){
     Route::get('table', 'Api\Admin\TableController@index');
     Route::post('table', 'Api\Admin\TableController@store');
     Route::post('table/{id}', 'Api\Admin\TableController@show');
@@ -90,6 +90,7 @@ Route::group([ 'prefix' => 'admin'], function (){
     Route::post('order/{id}/update', 'Api\Admin\OrderController@update');
     Route::post('order/{id}/remove', 'Api\Admin\OrderController@destroy');
     Route::post('order/{id}/generate', 'Api\Admin\OrderController@generate');
+      Route::post('order/{id}/create', 'Api\Admin\OrderController@order');
 
     Route::get('cart', 'Api\Admin\CartController@index');
     Route::post('cart', 'Api\Admin\CartController@store');

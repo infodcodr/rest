@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,8 +21,10 @@ class UserController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $User = User::paginate($per_page);
+            $role = Role::get();
+            $User = User::with('roles')->paginate($per_page);
             $data['data'] = $User;
+            $data['xdata']['role'] = $role;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
@@ -92,7 +95,10 @@ class UserController extends Controller
     {
         try{
             $User = User::find($id);
-            $User->update($request->except(['_token','id','created_at','updated_at']));
+            $User->update($request->except(['_token','id','created_at','updated_at','role']));
+            $User->password= bcrypt($request->password);
+            $User->syncRoles($request->role);
+            $User->save();
             $data['data'] = $User;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);
