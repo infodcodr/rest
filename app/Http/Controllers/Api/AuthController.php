@@ -16,20 +16,22 @@ class AuthController extends ResponseController
     public function signup(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password'
+           // 'name' => 'required|string|',
+           // 'email' => 'required|string|email|unique:users',
+            //'password' => 'required',
+            'mobile' => 'required'
         ]);
 
         if($validator->fails()){
             return $this->sendError($validator->errors());
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        if($user){
+        $user =New User();
+        $user->mobile = $request->mobile;
+        $user->email = $request->mobile.'@text.com';
+        $user->password = bcrypt($request->mobile);
+        $user->save();
+       if($user){
             $success['user'] =  $user;
             $success['token'] =  $user->createToken('token')->accessToken;
             $success['message'] = "Registration successfull..";
@@ -81,6 +83,22 @@ class AuthController extends ResponseController
 
 
     }
+     //logout
+     public function verify(Request $request)
+     {
+
+         $isUser = $request->otp;
+         if($isUser == '123456'){
+             $success['message'] = "Successfully Verified.";
+             return $this->sendResponse($success);
+         }
+         else{
+             $error = "wrong OTP.";
+             return $this->sendResponse($error);
+         }
+
+
+     }
 
     //getuser
     public function getUser(Request $request)

@@ -13,6 +13,6 @@ class Category extends Model
 
     public function menu()
     {
-        return $this->hasManyThrough(CategoryMenu::class);
+        return $this->belongsToMany(Menu::class,'category_menu');
     }
 }
