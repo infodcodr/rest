@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Branch;
 use App\Category;
+use App\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -21,7 +24,12 @@ class CategoryController extends Controller
                 $per_page=$request->per_page;
             }
             $Category = Category::paginate($per_page);
+            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+            $restaurant = Restaurant::select('name','id')->get();
+
             $data['data'] = $Category;
+            $data['xdata']['branch'] = $branch;
+            $data['xdata']['restaurant'] = $restaurant;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){

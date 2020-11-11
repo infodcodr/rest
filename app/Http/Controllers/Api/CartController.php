@@ -51,7 +51,7 @@ class CartController extends Controller
             $cart = Cart::where('table_id',$request->table_id)->where('item_id',$request->item_id)->first();
             $item = AppItems::find($request->item_id);
             if($item){
-            $request->amount = $item->amount*$request->qty;
+            $request->merge(['amount'=>$item->amount*$request->qty]);
             }
             if($cart){
                 $cart->qty = $request->qty;
@@ -62,7 +62,7 @@ class CartController extends Controller
             }else{
             $cart = Cart::create($request->except('_token'));
             }
-            $data['data'] = $request->qty ;
+            $data['data'] = $cart;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){
