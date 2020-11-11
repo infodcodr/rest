@@ -23,7 +23,7 @@ class MenuController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $menu = Menu::with('images')->paginate($per_page);
+            $menu = Menu::with('images','category')->paginate($per_page);
             $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
             $category = Category::select('name','id')->get();
             $data['data'] = $menu;
@@ -58,6 +58,7 @@ class MenuController extends Controller
         try{
             $menu = Menu::create($request->except('_token'));
             $this->images($request,$menu);
+            $menu->category()->sync(json_decode($request->category,true));
             $data['data'] = $menu;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);
@@ -102,7 +103,8 @@ class MenuController extends Controller
             $menu = Menu::find($id);
             $menu->update($request->except(['_token','id','created_at','updated_at']));
             $this->images($request,$menu);
-            $data['data'] = $menu;
+            $menu->category()->sync(json_decode($request->category,true));
+            $data['data'] = $request->category;
             $data['message'] = 'update';
             return  $this->apiResponse($data,200);
         }catch(\Exception $e){

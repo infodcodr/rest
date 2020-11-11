@@ -105,7 +105,7 @@ class UserController extends Controller
             $User = User::find($id);
             $User->update($request->except(['_token','id','created_at','updated_at','role']));
             $User->password= bcrypt($request->password);
-            $User->syncRoles($request->role);
+            $User->syncRoles(json_decode($request->roles,true));
             $User->save();
             $data['data'] = $User;
             $data['message'] = 'update';
