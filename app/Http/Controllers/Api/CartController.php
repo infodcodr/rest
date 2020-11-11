@@ -6,6 +6,7 @@ use App\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Items as AppItems;
 
 class CartController extends Controller
 {
@@ -48,6 +49,10 @@ class CartController extends Controller
     {
         try{
             $cart = Cart::where('table_id',$request->table_id)->where('item_id',$request->item_id)->first();
+            $item = AppItems::find($request->item_id);
+            if($item){
+            $request->amount = $item->amount*$request->qty;
+            }
             if($cart){
                 $cart->qty = $request->qty;
                 $cart->save();
