@@ -22,7 +22,12 @@ class BranchController extends Controller
                 $per_page=$request->per_page;
             }
             $branch = Branch::paginate($per_page);
-            $restaurant = Restaurant::select('name','id')->get();
+            if(auth()->user()->hasRole('2')){
+                $restaurant = Restaurant::select('name','id')->get();
+            }else{
+                $restaurant = Restaurant::select('name','id')->where('id',auth()->user()->restaurant_id)->get();
+            }
+
 
             $data['data'] = $branch;
              $data['xdata']['restaurant'] = $restaurant;

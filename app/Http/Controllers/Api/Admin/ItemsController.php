@@ -23,9 +23,17 @@ class ItemsController extends Controller
             if($request->per_page){
                 $per_page=$request->per_page;
             }
-            $items = Items::paginate($per_page);
-            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
-            $menu = Menu::select(DB::raw('name as name'),'id')->get();
+            if(auth()->user()->hasRole('2')){
+                $items = Items::paginate($per_page);
+                $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+                $menu = Menu::select(DB::raw('name as name'),'id')->get();
+            }else{
+                $items = Items::where('branch_id',auth()->user()->branch_id)->paginate($per_page);
+                $branch = Branch::select(DB::raw('branch_name as name'),'id')->where('restaurant_id',auth()->user()->restaurant_id)->get();
+                $menu = Menu::select(DB::raw('name as name'),'id')->where('branch_id',auth()->user()->branch_id)->get();
+
+            }
+
             $data['data'] = $items;
              $data['xdata']['branch'] = $branch;
              $data['xdata']['menu'] = $menu;

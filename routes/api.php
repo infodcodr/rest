@@ -49,19 +49,23 @@ Route::group([ 'prefix' => 'admin','middleware' => ['auth:api','check-permission
     Route::post('item/{id}/update', 'Api\Admin\ItemsController@update');
     Route::post('item/{id}/remove', 'Api\Admin\ItemsController@destroy');
 
+Route::group(['middleware' => ['role:Super Admin']], function () {
     Route::get('restaurants', 'Api\Admin\RestaurantController@index');
     Route::post('restaurants', 'Api\Admin\RestaurantController@store');
     Route::post('restaurants/search', 'Api\Admin\RestaurantController@search');
     Route::post('restaurants/{id}', 'Api\Admin\RestaurantController@show');
     Route::post('restaurants/{id}/update', 'Api\Admin\RestaurantController@update');
     Route::post('restaurants/{id}/remove', 'Api\Admin\RestaurantController@destroy');
+});
 
+Route::group(['middleware' => ['role:Super Admin']], function () {
     Route::get('user', 'Api\Admin\UserController@index');
     Route::post('user', 'Api\Admin\UserController@store');
     Route::post('user/search', 'Api\Admin\UserController@search');
     Route::post('user/{id}', 'Api\Admin\UserController@show');
     Route::post('user/{id}/update', 'Api\Admin\UserController@update');
     Route::post('user/{id}/remove', 'Api\Admin\UserController@destroy');
+});
 
     Route::get('branch', 'Api\Admin\BranchController@index');
     Route::post('branch', 'Api\Admin\BranchController@store');
@@ -70,13 +74,14 @@ Route::group([ 'prefix' => 'admin','middleware' => ['auth:api','check-permission
     Route::post('branch/{id}/update', 'Api\Admin\BranchController@update');
     Route::post('branch/{id}/remove', 'Api\Admin\BranchController@destroy');
 
+Route::group(['middleware' => ['role:Super Admin']], function () {
     Route::get('role', 'Api\Admin\RoleController@index');
     Route::post('role', 'Api\Admin\RoleController@store');
     Route::post('role/search', 'Api\Admin\RoleController@search');
     Route::post('role/{id}', 'Api\Admin\RoleController@show');
     Route::post('role/{id}/update', 'Api\Admin\RoleController@update');
     Route::post('role/{id}/remove', 'Api\Admin\RoleController@destroy');
-
+});
     Route::get('category', 'Api\Admin\CategoryController@index');
     Route::post('category', 'Api\Admin\CategoryController@store');
     Route::post('category/search', 'Api\Admin\CategoryController@search');

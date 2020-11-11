@@ -24,8 +24,13 @@ class CategoryController extends Controller
                 $per_page=$request->per_page;
             }
             $Category = Category::paginate($per_page);
-            $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
-            $restaurant = Restaurant::select('name','id')->get();
+            if(auth()->user()->hasRole('2')){
+                $branch = Branch::select(DB::raw('branch_name as name'),'id')->get();
+                $restaurant = Restaurant::select('name','id')->get();
+            }else{
+                $branch = Branch::select(DB::raw('branch_name as name'),'id')->where('restaurant_id',auth()->user()->restaurant_id)->get();
+                $restaurant = Restaurant::select('name','id')->where('id',auth()->user()->restaurant_id)->get();
+            }
 
             $data['data'] = $Category;
             $data['xdata']['branch'] = $branch;
