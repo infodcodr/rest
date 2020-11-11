@@ -114,7 +114,7 @@ Route::post('cart/{id}/update', 'Api\CartController@update');
 Route::post('cart/{id}/remove', 'Api\CartController@destroy');
 
 Route::post('order', 'Api\OrderController@store');
-Route::post('category', 'Api\CategoryController@index');
+Route::post('category/{id}', 'Api\CategoryController@index');
 Route::post('menu/{id}', 'Api\CategoryController@menu');
 
 Route::get('order/{id}', 'Api\OrderController@index');

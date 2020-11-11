@@ -14,10 +14,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         try{
-            $branch_id = auth()->user()->branch_id;
+            $branch_id = $id;
             $category = Category::with('menu')->where('branch_id',$branch_id)->get();
             $items =  $category;
             $data['data'] = $items;
