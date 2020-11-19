@@ -21,6 +21,7 @@ class ResponseController extends Controller
     	$response = [
             'error' => $error,
         ];
+        $response['status'] =  0;
         return response()->json($response, $code);
     }
 }
