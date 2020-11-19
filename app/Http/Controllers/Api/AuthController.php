@@ -25,16 +25,19 @@ class AuthController extends ResponseController
         if($validator->fails()){
             return $this->sendError($validator->errors());
         }
-
-        $user =New User();
-        $user->mobile = $request->mobile;
-        $user->email = $request->mobile.'@text.com';
-        $user->password = bcrypt($request->mobile);
-        $user->save();
+        $user = User::where('mobile',$request->mobile)->first();
+        $success['message'] = "Login successfull";
+        if(!$user){
+            $user =New User();
+            $user->mobile = $request->mobile;
+            $user->email = $request->mobile.'@text.com';
+            $user->password = bcrypt($request->mobile);
+            $user->save();
+            $success['message'] = "Registration successfull";
+        }
        if($user){
-            $success['user'] =  $user;
+            $success['data'] =  $user;
             $success['token'] =  $user->createToken('token')->accessToken;
-            $success['message'] = "Registration successfull..";
             return $this->sendResponse($success);
         }
         else{
