@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\User;
+use App\Branch;
 use App\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,7 +52,18 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         try{
-            $Restaurant = Restaurant::create($request->except('_token'));
+            if(!isset($request->restaurant_id)){
+             $Restaurant = Restaurant::create($request->except('_token'));
+             $request->merge(['restaurant_id'=>$Restaurant->id]);
+            }
+            $request->merge(['branch_name'=>$request->name]);
+            $Branch = Branch::create($request->except(['_token','name']));
+            $user = New User();
+            $user->name = $request->contact_name;
+            $user->password = bcrypt($request->contact_no);
+            $user->mobile = $request->contact_no;
+            $user->email = $request->contact_email;
+            $user->save();
             $this->images($request,$Restaurant);
             $data['data'] = $Restaurant;
             $data['message'] = 'created';

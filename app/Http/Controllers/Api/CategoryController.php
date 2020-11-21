@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Menu;
+use App\Table;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Menu;
 
 class CategoryController extends Controller
 {
@@ -99,7 +100,9 @@ class CategoryController extends Controller
     public function menu(Request $request,$id)
     {
         try{
-            $items = Menu::with('items')->find($id);
+            $table = Table::find($id);
+           // $items = Menu::with('items')->find($id);
+            $items = Category::with('menu','menu.items','menu.items.images')->where('branch_id',$table->branch_id)->get();
             $data['data'] = $items;
             $data['message'] = 'block';
             return  $this->apiResponse($data,200);

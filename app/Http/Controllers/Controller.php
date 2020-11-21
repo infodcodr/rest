@@ -14,7 +14,15 @@ class Controller extends BaseController
 
 	public function apiResponse ($data , $status)
 	{
-		return response()->json($data,$status);
+        $data['status']=0;
+        if($status == 200){
+            $data['status']=1;
+        }
+        $json = json_encode($data);
+        $decode = json_decode($json,true);
+        array_walk_recursive($decode,function(&$item){$item=strval($item);});
+
+		return response()->json($decode,$status);
     }
 
     public function images($request,$model){

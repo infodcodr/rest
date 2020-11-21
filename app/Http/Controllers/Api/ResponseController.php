@@ -12,7 +12,11 @@ class ResponseController extends Controller
 {
     public function sendResponse($response)
     {
-        return response()->json($response, 200);
+        $json = json_encode($response);
+        $decode = json_decode($json,true);
+        array_walk_recursive($decode,function(&$item){$item=strval($item);});
+
+        return response()->json($decode, 200);
     }
 
 
