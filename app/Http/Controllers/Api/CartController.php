@@ -62,6 +62,7 @@ class CartController extends Controller
             }else{
             $cart = Cart::create($request->except('_token'));
             }
+            $cart->items;
             $data['data'] = $cart;
             $data['message'] = 'created';
             return  $this->apiResponse($data,200);

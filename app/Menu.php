@@ -10,6 +10,13 @@ class Menu extends Model
     use UuidTraits;
     protected $table = 'menu';
     protected $fillable = ['branch_id','description','is_active','name','title'];
+
+     protected $casts = [
+        'restaurant_id' => 'integer',
+        'branch_id' => 'integer',
+        'parent_id' => 'integer',
+        'is_active' => 'integer',
+    ];
     public function submenu()
     {
         return $this->hasMany(SubMenu::class);

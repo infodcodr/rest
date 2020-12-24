@@ -30,6 +30,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -37,6 +38,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+          'restaurant_id' => 'integer',
+        'branch_id' => 'integer',
+        'is_active' => 'integer',
     ];
     public function restaurant()
     {

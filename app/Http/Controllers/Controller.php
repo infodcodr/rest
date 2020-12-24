@@ -20,7 +20,15 @@ class Controller extends BaseController
         }
         $json = json_encode($data);
         $decode = json_decode($json,true);
-        array_walk_recursive($decode,function(&$item){$item=strval($item);});
+        array_walk_recursive($decode,function(&$item){
+
+            if($item == null){
+            $item=strval($item);
+            }
+              if($item == '1' || $item == '0'){
+                $item = intval($item);
+            }
+        });
 
 		return response()->json($decode,$status);
     }
